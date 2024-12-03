@@ -1,0 +1,67 @@
+@layer tailwind-base, primereact, tailwind-utilities;
+
+@import url('primereact/resources/themes/lara-dark-blue/theme.css');
+
+@import url('primeicons/primeicons.css');
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/poppins-thin.ttf');
+  font-weight: 100;
+	line-height: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/poppins-medium.ttf');
+  font-weight: 300;
+	line-height: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/poppins-regular.ttf');
+  font-weight: normal;
+	line-height: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/poppins-semibold.ttf');
+  font-weight: 600;
+	line-height: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../assets/fonts/poppins-bold.ttf');
+  font-weight: 700;
+	line-height: normal;
+}
+
+
+* {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+	line-height: 1.2;
+}
+
+::before,
+::after {
+  font-family: 'primeicons' !important;
+}
