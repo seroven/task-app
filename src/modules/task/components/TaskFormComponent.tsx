@@ -5,7 +5,7 @@ interface FormTaskComponentProps {
   onHide: Function;
 }
 
-export const FormTaskComponent = ({ visible, onHide }: FormTaskComponentProps) => {
+export const TaskFormComponent = ({ visible, onHide }: FormTaskComponentProps) => {
   return (
     <Dialog
       header="Header"

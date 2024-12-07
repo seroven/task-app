@@ -3,7 +3,7 @@ import { TaskInterface } from './interfaces/task.interface';
 import { tasks as data } from './data/tasks';
 import { TaskComponent } from './components/TaskComponent';
 import { Button } from 'primereact/button';
-import { FormTaskComponent } from './components/FormTaskComponent';
+import { TaskFormComponent } from './components/TaskFormComponent';
 
 export const TaskPage = () => {
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
@@ -36,7 +36,7 @@ export const TaskPage = () => {
           })}
         </div>
       </section>
-      <FormTaskComponent visible={showForm} onHide={setShowForm} />
+      <TaskFormComponent visible={showForm} onHide={setShowForm} />
     </>
   );
 };

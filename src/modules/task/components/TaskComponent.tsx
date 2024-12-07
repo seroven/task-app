@@ -1,8 +1,6 @@
 import { TaskInterface } from '../interfaces/task.interface';
 import { Checkbox } from 'primereact/checkbox';
 import { StarRateComponent } from './StarRateComponent';
-import { useState } from 'react';
-import { FormTaskComponent } from './FormTaskComponent';
 
 interface TaskComponentProps {
   task: TaskInterface;
