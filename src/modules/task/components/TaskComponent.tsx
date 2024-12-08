@@ -5,7 +5,7 @@ import { StarRateComponent } from './StarRateComponent';
 interface TaskComponentProps {
   task: TaskInterface;
   onDoneTask: Function;
-	onShowForm: Function
+  onShowForm: Function;
 }
 
 export const TaskComponent = ({ task, onDoneTask, onShowForm }: TaskComponentProps) => {
@@ -13,16 +13,14 @@ export const TaskComponent = ({ task, onDoneTask, onShowForm }: TaskComponentPro
     <>
       <div
         className="flex items-stretch gap-4 rounded-lg border p-4 border-gray-700 hover:border-blue-500 transition-all hover:cursor-pointer"
-        onDoubleClick={() => onShowForm(true)}
+        onDoubleClick={() => onShowForm(task)}
       >
         <div className="flex-1">
-          <span className={`font-semibold text-blue-500 ${task.done && 'line-through'}`}>
-            {task.summary}
-          </span>
+          <span className={`font-semibold text-blue-500 ${task.done && 'line-through'}`}>{task.summary}</span>
           <p className={task.done ? 'line-through' : ''}>{task.description}</p>
         </div>
         <div className="flex gap-2 items-center">
-          <StarRateComponent rate={task.rate} readonly={true} />
+          <StarRateComponent rate={task.rate} />
           <Checkbox checked={task.done} onClick={() => onDoneTask(task)} />
         </div>
       </div>
