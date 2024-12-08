@@ -1,23 +1,26 @@
 import { Dialog } from 'primereact/dialog';
 import { TaskDataInterface, TaskInterface } from '../interfaces/task.interface';
 import { ModalBreakpoints } from '../../../shared/constants/modal-breakpoints';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { Button } from 'primereact/button';
 import { useEffect } from 'react';
 import { FieldWrapperComponent } from '../../../components/FieldWrapperComponent';
 import { InputText } from 'primereact/inputtext';
-import { StarRateComponent } from './StarRateComponent';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Rating } from 'primereact/rating';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface FormTaskComponentProps {
   task: TaskInterface | null;
   visible: boolean;
   onHide: Function;
+  onSave: Function;
 }
 
-export const TaskFormComponent = ({ task = null, visible, onHide }: FormTaskComponentProps) => {
+export const TaskFormComponent = ({ task = null, visible, onHide, onSave }: FormTaskComponentProps) => {
   const taskFormSchema = yup.object({
     summary: yup.string().required(),
     description: yup.string().required(),
@@ -27,16 +30,13 @@ export const TaskFormComponent = ({ task = null, visible, onHide }: FormTaskComp
   const {
     register,
     formState: { errors },
+    control,
     reset,
-    watch,
     getValues,
-    trigger,
-    setValue
+    trigger
   } = useForm<TaskDataInterface>({
     resolver: yupResolver(taskFormSchema)
   });
-  const [rate] = watch(['rate']);
-  const form = watch();
 
   useEffect(() => {
     if (!task) return;
@@ -47,18 +47,18 @@ export const TaskFormComponent = ({ task = null, visible, onHide }: FormTaskComp
     });
   }, [task]);
 
-  const onStarSelected = (rate: number) => {
-    setValue('rate', rate);
-  };
+  // const onStarSelected = (rate: number) => {
+  //   console.log(rate);
+  //   setValue('rate', rate);
+  //   const data = getValues();
+  //   onSave(data);
+  // };
 
   const onSubmit = async () => {
     const isValid = await trigger();
+    if (!isValid) return;
     const data = getValues();
-    console.log(data);
-
-    // const isValid = await trigger();
-    // const data = getValues();
-    // console.log(data);
+    onSave(data);
   };
 
   const hide = () => {
@@ -86,10 +86,23 @@ export const TaskFormComponent = ({ task = null, visible, onHide }: FormTaskComp
         </FieldWrapperComponent>
 
         <div className="flex-1 flex justify-center gap-4 text-2xl items-center">
-          <StarRateComponent rate={rate} readonly={false} onSelect={onStarSelected} invalid={!!errors.rate} />
+          <Controller
+            name="rate"
+            control={control}
+            render={({ field }) => (
+              <Rating
+                value={field.value}
+                onChange={field.onChange}
+                cancel={false}
+                onIcon={<FontAwesomeIcon icon={faStar} className="text-yellow-400" />}
+                offIcon={
+                  <FontAwesomeIcon icon={faStar} className={`${!!errors.rate ? 'text-red-400' : 'text-gray-600'} `} />
+                }
+              />
+            )}
+          />
         </div>
       </div>
-
       <FieldWrapperComponent label="Description" className="flex-1 my-7">
         <InputTextarea {...register('description')} invalid={!!errors.description} cols={2} className="w-full" />
       </FieldWrapperComponent>

@@ -1,6 +1,8 @@
 import { TaskInterface } from '../interfaces/task.interface';
 import { Checkbox } from 'primereact/checkbox';
-import { StarRateComponent } from './StarRateComponent';
+import { Rating } from 'primereact/rating';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface TaskComponentProps {
   task: TaskInterface;
@@ -20,7 +22,12 @@ export const TaskComponent = ({ task, onDoneTask, onShowForm }: TaskComponentPro
           <p className={task.done ? 'line-through' : ''}>{task.description}</p>
         </div>
         <div className="flex gap-2 items-center">
-          <StarRateComponent rate={task.rate} />
+          <Rating
+            value={task.rate}
+            cancel={false}
+            onIcon={<FontAwesomeIcon icon={faStar} className="text-yellow-400" />}
+            offIcon={<FontAwesomeIcon icon={faStar} className="text-gray-600" />}
+          />
           <Checkbox checked={task.done} onClick={() => onDoneTask(task)} />
         </div>
       </div>

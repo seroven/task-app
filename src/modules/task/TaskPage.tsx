@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TaskInterface } from './interfaces/task.interface';
+import { TaskDataInterface, TaskInterface } from './interfaces/task.interface';
 import { tasks as data } from './data/tasks';
 import { TaskComponent } from './components/TaskComponent';
 import { Button } from 'primereact/button';
@@ -23,6 +23,32 @@ export const TaskPage = () => {
     setSelectedTask(task);
   };
 
+  const onSaveTask = (task: TaskDataInterface) => {
+    const existTask = tasks.some((t) => t == selectedTask);
+    if (existTask) {
+      setTasks(
+        tasks.map((t) =>
+          t == selectedTask
+            ? {
+                ...task,
+                done: selectedTask.done
+              }
+            : t
+        )
+      );
+    } else {
+      setTasks([
+        {
+          ...task,
+          done: false
+        },
+        ...tasks
+      ]);
+    }
+
+    toggleForm();
+  };
+
   return (
     <>
       <section className="max-w-4xl m-auto">
@@ -37,7 +63,7 @@ export const TaskPage = () => {
           })}
         </div>
       </section>
-      <TaskFormComponent task={selectedTask} visible={showForm} onHide={() => toggleForm()} />
+      <TaskFormComponent task={selectedTask} visible={showForm} onHide={() => toggleForm()} onSave={onSaveTask} />
     </>
   );
 };

@@ -19,7 +19,10 @@ export const StarRateComponent = ({ rate, readonly = true, onSelect, invalid = f
   }, []);
 
   useEffect(() => {
-    if (!hasSelected && onSelect) onSelect(0);
+    if (!hasSelected && onSelect && !rate) {
+      getHighlightStars(rate)
+      onSelect(0);
+    }
   }, [hasSelected]);
 
   const getHighlightStars = (rate: number | null): boolean[] => {
